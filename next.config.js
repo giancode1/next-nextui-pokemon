@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['raw.githubusercontent.com'], //permitir este dominio
+    domains: ['raw.githubusercontent.com', 'pokeapi.co'], //permitir este dominio
   }
 }
 
