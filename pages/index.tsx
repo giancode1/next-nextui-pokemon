@@ -4,10 +4,17 @@ import { Button, Text, theme, CssBaseline } from '@nextui-org/react';
 
 import { Layout } from '../components/layouts';
 import pokeApi from '../api/pokeApi';
-import { PokemonListResponse } from '../interfaces/pokemon-list';
+import { PokemonListResponse, SmallPokemon } from '../interfaces/pokemon-list';
 
-const HomePage: NextPage = (props) => {
-  console.log(props); //si se muestra en la consola de la pagina
+interface Props{
+  pokemons: SmallPokemon[];
+}
+
+const HomePage: NextPage<Props> = ({pokemons}) => {
+  //console.log(props); //si se muestra en la consola de la pagina
+  //console.log(pokemons[0].name); 
+  console.log(pokemons);
+
   return (
     <Layout title={'Listado de Pokémons'}>
       <h1>Hola</h1>
@@ -16,33 +23,14 @@ const HomePage: NextPage = (props) => {
       </Button>
 
       <ul>
-        <li>Pokemon</li>
-        <li>Pokemon</li>
-        <li>Pokemon</li>
-        <li>Pokemon</li>
+        {
+          pokemons.map(({id,name}) => 
+            <li key={id}>#{id}-{name}</li>
+          )
+        }
       </ul>
 
-      <Text
-        h2
-        color="primary"
-      >
-        Using tokens
-      </Text>
-
-      <Text color="success">
-        Almost before we knew it, we had left the ground.
-      </Text>
-
-      <Text
-        h1
-        size={60}
-        css={{
-          textGradient: "45deg, $purple500 -20%, $pink500 100%",
-        }}
-        weight="bold"
-      >
-        Make the Web
-      </Text>
+      
 
 
 
@@ -64,11 +52,19 @@ const HomePage: NextPage = (props) => {
 //en desarrollo se ejecuta cada vez que se renderiza la pagina, en build se ejecuta solo una vez
 export const getStaticProps: GetStaticProps = async (ctx) => { //solo se ejecuta en build-time
   const {data} = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
-  console.log(data);
-  console.log("Hola mundo")  //en la consola
+  //console.log(data);         //en la consola
+  //console.log("Hola mundo")  //en la consola
+  const pokemons: SmallPokemon[] = data.results.map((pokemon, index) => ({
+      ...pokemon,
+      id: index + 1,
+      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${index+1}.svg`
+    })
+  );
+
   return {
     props: {
-      pokemons: data.results
+      // pokemons: data.results
+      pokemons: pokemons
     }
   }
 }
