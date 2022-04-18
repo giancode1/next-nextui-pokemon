@@ -3,7 +3,6 @@ import type { NextPage, GetStaticProps } from 'next';
 import { Button, Text, theme, CssBaseline } from '@nextui-org/react';
 
 import { Layout } from '../components/layouts';
-import pokeApi from '../api/pokeApi';
 
 const HomePage: NextPage = (props) => {
   console.log(props); //si se muestra en la consola de la pagina
@@ -62,12 +61,11 @@ const HomePage: NextPage = (props) => {
 //GetStaticProps solo usar en pages, por ejemplo no en componentes
 //en desarrollo se ejecuta cada vez que se renderiza la pagina, en build se ejecuta solo una vez
 export const getStaticProps: GetStaticProps = async (ctx) => { //solo se ejecuta en build-time
-  const {data} = await pokeApi.get('/pokemon?limit=151');
-  console.log(data);
+  // const { data } = await  // your fetch function here 
   console.log("Hola mundo")  //en la consola
   return {
     props: {
-      pokemons: data.results
+      name: 'Giancarlo',
     }
   }
 }
