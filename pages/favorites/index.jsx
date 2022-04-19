@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import { Layout } from "../../components/layouts";
 
 const FavoritesPage = () => {

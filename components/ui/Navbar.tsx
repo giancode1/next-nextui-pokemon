@@ -16,7 +16,7 @@ export const Navbar = () => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'start',
-        padding: '0x 20px',
+        padding: '0 20px',
         backgroundColor: theme?.colors.gray800.value
     }}>
         <Image 
@@ -37,7 +37,8 @@ export const Navbar = () => {
         {/* usa 'css'  para los componentes propiso de NextUI */}
         <Spacer css={{ flex:1 }} />
 
-        <Link href="/favorites" css={{marginRight:'10px'}}>
+        {/* <Link href="/favorites" css={{marginRight:'10px'}}> */}
+        <Link href="/favorites">
           <Text color="white">Favoritos</Text>
         </Link>
     </div>

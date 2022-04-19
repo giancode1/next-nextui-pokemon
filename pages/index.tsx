@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import { Grid } from '@nextui-org/react';
 
 import { Layout } from '../components/layouts';
-import pokeApi from '../api/pokeApi';
+import {pokeApi} from '../api';
 import { PokemonListResponse, SmallPokemon } from '../interfaces/pokemon-list';
 import { PokemonCard } from '../components/pokemon';
 
@@ -12,7 +12,7 @@ interface Props{
 }
 
 const HomePage: NextPage<Props> = ({pokemons}) => {
-  console.log(pokemons);
+  //console.log(pokemons);
 
   return (
     <Layout title={'Listado de Pokémons'}>
@@ -21,9 +21,7 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
         {
           pokemons.map( (pokemon) => (
             <PokemonCard key={pokemon.id} pokemon={pokemon} />
-          )
-            
-          )
+          ))
         }
       </Grid.Container>
 

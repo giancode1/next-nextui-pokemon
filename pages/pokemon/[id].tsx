@@ -1,9 +1,10 @@
 //rafce  exportacion por defecto
 import { GetStaticProps, NextPage, GetStaticPaths } from "next";
-import { Layout } from "../../components/layouts";
-import pokeApi from '../../api/pokeApi';
-import { Pokemon } from "../../interfaces";
 import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
+
+import {pokeApi} from '../../api';
+import { Layout } from "../../components/layouts";
+import { Pokemon } from "../../interfaces";
 
 interface Props {
   pokemon: Pokemon
