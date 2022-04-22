@@ -22,7 +22,6 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
     // console.log("id:" + pokemon.id);
     localFavorites.toggleFavorite(pokemon.id);
     setisInFavorites(!isInFavorites);
-    //canvas-confetti
     if(!isInFavorites){
       confetti({
         zIndex: 999,
@@ -123,9 +122,17 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const { name } = params as { name: string };
     const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
+    
+    //solo manda estos datos, para optimizar
+    const pokemon ={
+        id: data.id,
+        name: data.name,
+        sprites: data.sprites,
+    }
     return {
       props: {
-        pokemon: data
+        // pokemon: data
+        pokemon   //ES6
       },
     };
 }
