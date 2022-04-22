@@ -1,4 +1,6 @@
 //rafce  exportacion por defecto
+import { useState } from "react";
+
 import { GetStaticProps, NextPage, GetStaticPaths } from "next";
 import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
 
@@ -6,7 +8,8 @@ import {pokeApi} from '../../api';
 import { Layout } from "../../components/layouts";
 import { Pokemon } from "../../interfaces";
 import { localFavorites } from "../../utils";
-import { useState } from "react";
+
+import confetti from "canvas-confetti";
 
 interface Props {
   pokemon: Pokemon;
@@ -19,6 +22,19 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
     // console.log("id:" + pokemon.id);
     localFavorites.toggleFavorite(pokemon.id);
     setisInFavorites(!isInFavorites);
+    //canvas-confetti
+    if(!isInFavorites){
+      confetti({
+        zIndex: 999,
+        particleCount: 100,
+        spread: 360,
+        angle: 60,
+        origin: {
+          x: 1,
+          y: 0,
+        },
+      });
+    }
   }
   return (
     <Layout title={pokemon.name}>
