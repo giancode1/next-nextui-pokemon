@@ -6,6 +6,7 @@ import { Layout } from '../components/layouts';
 import {pokeApi} from '../api';
 import { PokemonListResponse, SmallPokemon } from '../interfaces/pokemon-list';
 import { PokemonCard } from '../components/pokemon';
+import Image from 'next/image';
 
 interface Props{
   pokemons: SmallPokemon[];
@@ -16,7 +17,15 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
 
   return (
     <Layout title={'Listado de Pokémons'}>
-
+      {/* <Image 
+        src='/img/banner.png'
+        width='400'
+        height="100"
+        alt='pokemon-banner'
+        style={{
+          textAlign: 'center',
+        }}
+      /> */}
       <Grid.Container gap={2} justify="center">
         {
           pokemons.map( (pokemon) => (
