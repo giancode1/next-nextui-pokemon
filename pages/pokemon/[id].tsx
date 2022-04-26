@@ -11,6 +11,7 @@ import { localFavorites } from "../../utils";
 import confetti from "canvas-confetti";
 import { getPokemonInfo } from '../../utils/getPokemonInfo';
 
+
 interface Props {
   pokemon: Pokemon;
 }
@@ -117,7 +118,8 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
   //console.log("pokemons151:", pokemons151);
   return {
     paths: pokemons151.map((id) => ({ params: { id } })), // paths: [{ params: { id: '1' } }, { params: { id: '2' } }, ...]
-    fallback: false, //no deja pasar, sino existe el id definido arriba
+    //fallback: false, //no deja pasar, sino existe el id definido arriba
+    fallback: 'blocking', 	
   };
 };
 
@@ -125,11 +127,26 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 // export const getStaticProps: GetStaticProps = async (ctx) => {
 //console.log("ctx.params:", ctx.params); //el parametro de la url
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  
   const { id } = params as { id: string };
+  
+  const pokemon = await getPokemonInfo( id );
+
+  if( !pokemon ){
+    return{
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
+
+
   return {
     props: {
-      pokemon: await getPokemonInfo(id),
+      pokemon   //ECMAScript 6
     },
+    revalidate: 86400, //segundos  //60 * 60 * 24 //cada 24 horas se vuelve a ejecutar
   };
 };
 
