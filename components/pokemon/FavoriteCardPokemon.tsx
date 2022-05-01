@@ -21,6 +21,7 @@ const FavoriteCardPokemon:FC<Props> = ({pokemonId}) => {
         width={"100%"}
         height={140}
       />
+      
     </Card>
   </Grid>
   )

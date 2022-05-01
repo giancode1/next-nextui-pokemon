@@ -1,12 +1,16 @@
 import Image from "next/image"
 import NextLink from "next/link"
-import { Spacer, Text, useTheme, Link } from "@nextui-org/react"
+import { Spacer, Text, Switch, useTheme, Link } from "@nextui-org/react"
+import useDarkMode from 'use-dark-mode';
 
+import { SunIcon } from '../../icons/SunIcon';
+import { MoonIcon } from '../../icons/MoonIcon';
 
 export const Navbar = () => {
 
     const { theme } = useTheme()
     // console.log(theme)
+    const darkMode = useDarkMode(false);
 
   return (
     // usa style para los componentes propios de html
@@ -37,9 +41,22 @@ export const Navbar = () => {
         {/* usa 'css'  para los componentes propiso de NextUI */}
         <Spacer css={{ flex:1 }} />
 
+        <Switch
+          checked={darkMode.value}
+          onChange={() => darkMode.toggle()}
+          iconOn={<SunIcon filled   />}
+          iconOff={<MoonIcon filled   />}
+          color="secondary"
+          css={{
+            marginRight: '20px',
+          }}
+        />
+
+      
+
         {/* <Link href="/favorites" css={{marginRight:'10px'}}> */}
         <Link href="/favorites">
-          <Text color="white">Favoritos</Text>
+          <Text color="white">Favorites</Text>
         </Link>
     </div>
   )

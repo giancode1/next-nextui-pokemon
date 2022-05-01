@@ -6,17 +6,20 @@ import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
 
 import { pokeApi } from '../../api';
 import { Layout } from "../../components/layouts";
-import { Pokemon, PokemonListResponse } from "../../interfaces";
+import { PokemonListResponse, PokemonInfo } from "../../interfaces";
 import { getPokemonInfo, localFavorites } from "../../utils";
 
 import confetti from "canvas-confetti";
 
+
 interface Props {
-  pokemon: Pokemon;
+  pokemon: PokemonInfo;
 }
 
 const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
   const [isInFavorites, setisInFavorites] = useState(localFavorites.existInFavorites(pokemon.id));
+
+  // console.log("pokemon:", pokemon);
 
   const onToggleFavorite = () => {
     // console.log("id:" + pokemon.id);
@@ -38,15 +41,48 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
   return (
     <Layout title={pokemon.name}>
       <Grid.Container css={{ marginTop: '5px' }} gap={2}>
+
         <Grid xs={12} sm={4} >
-          <Card hoverable css={{ padding: '30px' }}>
-            <Card.Body css={{ p: 1 }}>
+          <Card hoverable css={{ padding: '15px' }}>
+            <Text
+              h1
+              transform="capitalize"
+              css={{
+                textAlign: "center",
+              }}
+            >
+              {pokemon.name}
+            </Text>
+            <Card.Body css={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
+              
+              
               <Card.Image
                 src={pokemon.sprites.other?.dream_world?.front_default || '/no-image.png'}
                 alt={pokemon.name}
                 width="100%"
                 height={200}
               />
+
+              <Grid.Container gap={0.2} justify="center" css={{marginTop:"10px"}}>
+                <Grid >
+                  <Card bordered shadow={false}>
+                     weight : {pokemon.weight}
+                  </Card>
+                </Grid>
+
+                <Grid >
+                  <Card bordered shadow={false}>
+                    height : {pokemon.height}
+                  </Card>
+                </Grid>
+ 
+                <Grid>
+                  <Card bordered shadow={false}>
+                    type : {pokemon.types.map((element, index) => element.type.name).join(', ')}
+                  </Card>
+                </Grid>
+              </Grid.Container>
+             
             </Card.Body>
           </Card>
         </Grid>
@@ -54,8 +90,18 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
         <Grid xs={12} sm={8}>
           <Card>
             <Card.Header css={{ display: "flex", justifyContent: 'space-between' }}>
-              <Text h1 transform="capitalize">{pokemon.name}</Text>
-
+              
+              <Text size={30}>Abilities:</Text>
+                {
+                  pokemon.abilities.map((ability, index) => (
+                    <Grid key={index}>
+                      <Card hoverable bordered shadow={false} >
+                        {ability.ability.name}
+                      </Card>
+                    </Grid>
+                  ))
+                }
+              
               <Button
                 color="gradient"
                 ghost={!isInFavorites}
@@ -121,11 +167,10 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
-  const minusName = name.toLocaleLowerCase();
-  const pokemon = await getPokemonInfo(minusName);
-
-  if( !pokemon ){
-    return{
+  const pokemon = await getPokemonInfo(name);
+  console.log("pokemon::::", pokemon);
+  if (!pokemon) {
+    return {
       redirect: {
         destination: '/',
         permanent: false,
@@ -137,7 +182,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       pokemon,
     },
-    revalidate: 86400,
+    // revalidate: 86400,
   }
 };
 

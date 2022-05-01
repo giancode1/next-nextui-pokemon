@@ -33,6 +33,15 @@ export const Layout: FC<Props> = ({ children, title }) => {
         {children}
       </main>
 
+      <footer style={{textAlign:"center"}}>
+            <p>
+                Made by &nbsp;
+                 <a href="https://github.com/giancode1" target="_blank" rel="noopener noreferrer">giancode1</a>
+                 &nbsp;
+                | &nbsp;<a href="https://twitter.com/GiancCool" target="_blank" rel="noopener noreferrer">twitter</a> 
+            </p>
+        </footer>
+
     </>
   )
 }

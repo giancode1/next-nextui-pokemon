@@ -1,12 +1,11 @@
 import type { NextPage, GetStaticProps } from 'next';
 
-import { Grid } from '@nextui-org/react';
+import { Grid, Text } from '@nextui-org/react';
 
 import { Layout } from '../components/layouts';
 import {pokeApi} from '../api';
 import { PokemonListResponse, SmallPokemon } from '../interfaces/pokemon-list';
 import { PokemonCard } from '../components/pokemon';
-import Image from 'next/image';
 
 interface Props{
   pokemons: SmallPokemon[];
@@ -17,6 +16,14 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
 
   return (
     <Layout title={'Listado de Pokémons'}>
+      <Text 
+        h1
+        weight="bold"
+        css={{
+          textGradient: "45deg, $blue500 -20%, $pink500 60%",
+          textAlign: "center",
+        }}
+      >Pókemon Primera Generación</Text>
       {/* <Image 
         src='/img/banner.png'
         width='400'
