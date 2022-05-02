@@ -1,7 +1,8 @@
 import type { AppProps } from 'next/app';
 
 import { NextUIProvider } from '@nextui-org/react';
-import { darkTheme, lightTheme } from '../themes'; //archivo creado por mi
+//archivo creado por mi
+import { darkTheme, lightTheme } from '../themes'; 
 
 import '../styles/globals.css';
 import useDarkMode from 'use-dark-mode';
