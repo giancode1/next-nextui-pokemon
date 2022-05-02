@@ -89,30 +89,34 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
 
         <Grid xs={12} sm={8}>
           <Card>
-            <Card.Header css={{ display: "flex", justifyContent: 'space-between' }}>
+            <Card.Header>
+              <Container display='flex' justify="center">
+                <Button
+                  color="gradient"
+                  ghost={!isInFavorites}
+                  onClick={onToggleFavorite}
+                >
+                  {isInFavorites ? 'Remove from favorites' : 'Add to favorites'}
+                </Button>
+                
+              </Container>
               
-              <Text size={30}>Abilities:</Text>
-                {
-                  pokemon.abilities.map((ability, index) => (
-                    <Grid key={index}>
-                      <Card hoverable bordered shadow={false} >
-                        {ability.ability.name}
-                      </Card>
-                    </Grid>
-                  ))
-                }
-              
-              <Button
-                color="gradient"
-                ghost={!isInFavorites}
-                onClick={onToggleFavorite}
-              >
-                {isInFavorites ? 'Remove from favorites' : 'Add to favorites'}
-              </Button>
             </Card.Header>
 
             <Card.Body>
-              <Text size={30}>Sprites:</Text>
+            <Text size={28}>Abilities:</Text>
+            <Container direction='row' display='flex' gap={0} justify='center'>
+                  {
+                    pokemon.abilities.map((ability, index) => (
+                      <Grid key={index}>
+                        <Card hoverable bordered shadow={false} >
+                          {ability.ability.name}
+                        </Card>
+                      </Grid>
+                    ))
+                  }
+              </Container>
+              <Text size={28}>Sprites:</Text>
 
               <Container direction='row' display='flex' gap={0}>
                 <Image
@@ -139,9 +143,8 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
                   width={100}
                   height={100}
                 />
-
-
               </Container>
+              
             </Card.Body>
           </Card>
 

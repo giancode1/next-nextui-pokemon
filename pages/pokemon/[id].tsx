@@ -5,7 +5,7 @@ import { GetStaticProps, NextPage, GetStaticPaths } from "next";
 import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
 
 import { Layout } from "../../components/layouts";
-import { Pokemon } from "../../interfaces";
+import { PokemonInfo } from "../../interfaces";
 import { localFavorites } from "../../utils";
 
 import confetti from "canvas-confetti";
@@ -13,11 +13,14 @@ import { getPokemonInfo } from '../../utils/getPokemonInfo';
 
 
 interface Props {
-  pokemon: Pokemon;
+  pokemon: PokemonInfo;
 }
+
 
 const PokemonPage: NextPage<Props> = ({ pokemon }) => {
   const [isInFavorites, setisInFavorites] = useState(localFavorites.existInFavorites(pokemon.id));
+
+  // console.log("pokemon:", pokemon);
 
   const onToggleFavorite = () => {
     // console.log("id:" + pokemon.id);
@@ -39,35 +42,82 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
   return (
     <Layout title={pokemon.name}>
       <Grid.Container css={{ marginTop: '5px' }} gap={2}>
+
         <Grid xs={12} sm={4} >
-          <Card hoverable css={{ padding: '30px' }}>
-            <Card.Body css={{ p: 1 }}>
+          <Card hoverable css={{ padding: '15px' }}>
+            <Text
+              h1
+              transform="capitalize"
+              css={{
+                textAlign: "center",
+              }}
+            >
+              {pokemon.name}
+            </Text>
+            <Card.Body css={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
+              
+              
               <Card.Image
                 src={pokemon.sprites.other?.dream_world?.front_default || '/no-image.png'}
                 alt={pokemon.name}
                 width="100%"
                 height={200}
               />
+
+              <Grid.Container gap={0.2} justify="center" css={{marginTop:"10px"}}>
+                <Grid >
+                  <Card bordered shadow={false}>
+                     weight : {pokemon.weight}
+                  </Card>
+                </Grid>
+
+                <Grid >
+                  <Card bordered shadow={false}>
+                    height : {pokemon.height}
+                  </Card>
+                </Grid>
+ 
+                <Grid>
+                  <Card bordered shadow={false}>
+                    type : {pokemon.types.map((element, index) => element.type.name).join(', ')}
+                  </Card>
+                </Grid>
+              </Grid.Container>
+             
             </Card.Body>
           </Card>
         </Grid>
 
         <Grid xs={12} sm={8}>
           <Card>
-            <Card.Header css={{ display: "flex", justifyContent: 'space-between' }}>
-              <Text h1 transform="capitalize">{pokemon.name}</Text>
-
-              <Button
-                color="gradient"
-                ghost={!isInFavorites}
-                onClick={onToggleFavorite}
-              >
-                {isInFavorites ? 'Remove from favorites' : 'Add to favorites'}
-              </Button>
+            <Card.Header>
+              <Container display='flex' justify="center">
+                <Button
+                  color="gradient"
+                  ghost={!isInFavorites}
+                  onClick={onToggleFavorite}
+                >
+                  {isInFavorites ? 'Remove from favorites' : 'Add to favorites'}
+                </Button>
+                
+              </Container>
+              
             </Card.Header>
 
             <Card.Body>
-              <Text size={30}>Sprites:</Text>
+            <Text size={28}>Abilities:</Text>
+            <Container direction='row' display='flex' gap={0} justify='center'>
+                  {
+                    pokemon.abilities.map((ability, index) => (
+                      <Grid key={index}>
+                        <Card hoverable bordered shadow={false} >
+                          {ability.ability.name}
+                        </Card>
+                      </Grid>
+                    ))
+                  }
+              </Container>
+              <Text size={28}>Sprites:</Text>
 
               <Container direction='row' display='flex' gap={0}>
                 <Image
@@ -94,9 +144,8 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                   width={100}
                   height={100}
                 />
-
-
               </Container>
+              
             </Card.Body>
           </Card>
 
@@ -146,7 +195,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       pokemon   //ECMAScript 6
     },
-    revalidate: 86400, //segundos  //60 * 60 * 24 //cada 24 horas se vuelve a ejecutar
+    //revalidate: 86400, //segundos  //60 * 60 * 24 //cada 24 horas se vuelve a ejecutar
   };
 };
 
