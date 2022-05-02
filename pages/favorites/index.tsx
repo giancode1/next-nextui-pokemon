@@ -6,9 +6,10 @@ import { localFavorites } from "../../utils";
 
 import FavoritePokemons from "../../components/pokemon/FavoritePokemons"
 
+
 const FavoritesPage = () => {
- //favoritePokemons esta en localStorage
-  const [favoritePokemons, setFavoritePokemons] = useState([]);
+  //favoritePokemons esta en localStorage
+  const [favoritePokemons, setFavoritePokemons] = useState<number[]>([]);
   
   useEffect(() => {
     setFavoritePokemons( localFavorites.pokemons() );
@@ -19,8 +20,8 @@ const FavoritesPage = () => {
     <Layout title="Pokémons - favoritos">
       {
         favoritePokemons.length === 0 
-          ? <NoFavorites />
-          : <FavoritePokemons pokemons={favoritePokemons}/>
+        ? <NoFavorites />
+        : <FavoritePokemons pokemons={favoritePokemons}/>
       }
     </Layout>
   )

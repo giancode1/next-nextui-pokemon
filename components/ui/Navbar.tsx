@@ -8,9 +8,9 @@ import { MoonIcon } from '../../icons/MoonIcon';
 
 export const Navbar = () => {
 
-    const { theme } = useTheme()
+    const { theme, isDark  } = useTheme()
     // console.log(theme)
-    const darkMode = useDarkMode(false);
+    const darkMode = useDarkMode(true);
 
   return (
     // usa style para los componentes propios de html
@@ -42,7 +42,9 @@ export const Navbar = () => {
         <Spacer css={{ flex:1 }} />
 
         <Switch
-          checked={darkMode.value}
+          // checked={darkMode.value}
+          initialChecked
+          checked={isDark}
           onChange={() => darkMode.toggle()}
           iconOn={<SunIcon filled   />}
           iconOff={<MoonIcon filled   />}

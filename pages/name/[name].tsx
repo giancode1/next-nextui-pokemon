@@ -53,8 +53,7 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
             >
               {pokemon.name}
             </Text>
-            <Card.Body css={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
-              
+            <Card.Body css={{ p: 1, display: 'flex' }}>
               
               <Card.Image
                 src={pokemon.sprites.other?.dream_world?.front_default || '/no-image.png'}
@@ -63,25 +62,19 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
                 height={200}
               />
 
-              <Grid.Container gap={0.2} justify="center" css={{marginTop:"10px"}}>
-                <Grid >
-                  <Card bordered shadow={false}>
-                     weight : {pokemon.weight}
+              <Container  css={{marginTop:"10px"}}>
+                  <Card bordered shadow={false} >
+                    <Text css={{textAlign: 'center'}}>weight : {pokemon.weight} </Text>
                   </Card>
-                </Grid>
-
-                <Grid >
+                
                   <Card bordered shadow={false}>
-                    height : {pokemon.height}
+                    <Text css={{textAlign: 'center'}}>height : {pokemon.height}</Text>
                   </Card>
-                </Grid>
- 
-                <Grid>
+                
                   <Card bordered shadow={false}>
-                    type : {pokemon.types.map((element, index) => element.type.name).join(', ')}
+                    <Text css={{textAlign: 'center'}}>type : {pokemon.types.map((element, index) => element.type.name).join(', ')}</Text>
                   </Card>
-                </Grid>
-              </Grid.Container>
+              </Container>
              
             </Card.Body>
           </Card>
@@ -92,7 +85,9 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
             <Card.Header>
               <Container display='flex' justify="center">
                 <Button
+                  size="lg"
                   color="gradient"
+                  animated
                   ghost={!isInFavorites}
                   onClick={onToggleFavorite}
                 >
@@ -171,7 +166,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
   const pokemon = await getPokemonInfo(name);
-  console.log("pokemon::::", pokemon);
+  //console.log("pokemon::::", pokemon);
   if (!pokemon) {
     return {
       redirect: {
