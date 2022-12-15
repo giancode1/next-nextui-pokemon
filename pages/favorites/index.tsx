@@ -10,18 +10,18 @@ import FavoritePokemons from "../../components/pokemon/FavoritePokemons"
 const FavoritesPage = () => {
   //favoritePokemons esta en localStorage
   const [favoritePokemons, setFavoritePokemons] = useState<number[]>([]);
-  
+
   useEffect(() => {
-    setFavoritePokemons( localFavorites.pokemons() );
+    setFavoritePokemons(localFavorites.pokemons());
   }, []);
-  
-  
+
+
   return (
     <Layout title="Pokémons - favoritos">
       {
-        favoritePokemons.length === 0 
-        ? <NoFavorites />
-        : <FavoritePokemons pokemons={favoritePokemons}/>
+        favoritePokemons.length === 0
+          ? <NoFavorites />
+          : <FavoritePokemons pokemons={favoritePokemons} />
       }
     </Layout>
   )

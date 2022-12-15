@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
 
-import { Button, Grid, Text } from '@nextui-org/react';
+import { Grid, Text } from '@nextui-org/react';
 
 import { Layout } from '../components/layouts';
 import {pokeApi} from '../api';
@@ -24,10 +24,7 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
           textGradient: "45deg, $blue500 -20%, $pink500 60%",
           textAlign: "center",
         }}
-      >Pókemon Primera Generación</Text>
-
-
-
+      >Pokémon Segunda Generación</Text>
       {/* <Image 
         src='/img/banner.png'
         width='400'
@@ -37,7 +34,6 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
           textAlign: 'center',
         }}
       /> */}
-
       <Grid.Container gap={2} justify="center">
         {
           pokemons.map( (pokemon) => (
@@ -46,7 +42,7 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
         }
       </Grid.Container>
 
-        <Flotante />
+      <Flotante />
 
     </Layout>
   )
@@ -59,12 +55,12 @@ const HomePage: NextPage<Props> = ({pokemons}) => {
 //GetStaticProps solo usar en pages, por ejemplo no en componentes
 //en desarrollo se ejecuta cada vez que se renderiza la pagina, en build se ejecuta solo una vez
 export const getStaticProps: GetStaticProps = async (ctx) => { //solo se ejecuta en build-time
-  const {data} = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
+  const {data} = await pokeApi.get<PokemonListResponse>('/pokemon?limit=100&offset=151');
   //console.log(data);         //en la consola
   const pokemons: SmallPokemon[] = data.results.map((pokemon, index) => ({
       ...pokemon,
-      id: index + 1,
-      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${index+1}.svg`
+      id: index + 151,
+      img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${index+152}.svg`
     })
   );
 

@@ -5,6 +5,7 @@ import useDarkMode from 'use-dark-mode';
 
 import { SunIcon } from '../../icons/SunIcon';
 import { MoonIcon } from '../../icons/MoonIcon';
+import { useRouter } from "next/router";
 
 export const Navbar = () => {
 
@@ -35,6 +36,12 @@ export const Navbar = () => {
           <Link>
             <Text color="white" h2>P</Text>
             <Text color="white" h3>okémon</Text>
+          </Link>
+        </NextLink>
+
+        <NextLink href="/segunda" passHref >
+          <Link css={{marginLeft:'15px', marginTop:'6px'}}>
+            <Text color="white" h4> Segunda G</Text>
           </Link>
         </NextLink>
         
